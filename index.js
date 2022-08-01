@@ -98,9 +98,12 @@ const questions = [
             console.table(selections);
         if (selections.options == 'Add engineer') {
             inquirer.prompt(engineer);
+            
+            //need to figure out how to re-call the options varaible to ask "add engineer, add intern or finish here"
 
         } else if(selections.options == 'Add intern'){
-            inquirer.prompt(intern)
+            inquirer.prompt(intern);
+            //need to figure out how to re-call the options varaible to ask "add engineer, add intern or finish here"
         }else {
             //finishi= team
         }
