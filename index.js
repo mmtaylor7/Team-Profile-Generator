@@ -97,12 +97,17 @@ const questions = [
         inquirer.prompt(options).then((selections) => {
             console.table(selections);
         if (selections.options == 'Add engineer') {
-            inquirer.prompt(engineer);
+            inquirer.prompt(engineer).then((data) => {
+              //after engineer questions
+            menu()  
+            });
             
             //need to figure out how to re-call the options varaible to ask "add engineer, add intern or finish here"
 
         } else if(selections.options == 'Add intern'){
-            inquirer.prompt(intern);
+            inquirer.prompt(intern).then((data) => {
+              menu()
+            });
             //need to figure out how to re-call the options varaible to ask "add engineer, add intern or finish here"
         }else {
             
@@ -111,7 +116,7 @@ const questions = [
     }
     function buildTeam(){
         //fs.writeFile
-        //use the template helper code: map through the array, for each employee create an appriate html block for that employee. use template literal
+        // for each employee needs to be a place in html for each one? 
     }
     // Function call to initialize app
     init();
