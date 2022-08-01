@@ -34,19 +34,81 @@ const questions = [
           },
     ]
 
+    const engineer = [
+        {
+            type: 'input',
+            message: 'What is the engineer\'\s name?',
+            name: 'engineerName',
+          },
+          {
+            type: 'input',
+            message: 'What is the engineer\'\s id?',
+            name: 'engineerId',
+          },
+          {
+            type: 'input',
+            message: 'What is the engineer\'\s email?',
+            name: 'engineerEmail',
+          },
+          {
+            type: 'input',
+            message: 'What is the engineer\'\s GitHub username?',
+            name: 'engineerGithub',
+          },
+    ]
+
+    const intern = [
+        {
+            type: 'input',
+            message: 'What is the intern\'\s name?',
+            name: 'internName',
+          },
+          {
+            type: 'input',
+            message: 'What is the intern\'\s id?',
+            name: 'internId',
+          },
+          {
+            type: 'input',
+            message: 'What is the intern\'\s email?',
+            name: 'internEmail',
+          },
+          {
+            type: 'input',
+            message: 'What is the intern\'\s school name?',
+            name: 'internSchool',
+          },
+    ]
+
+    
+
     function init() {
         console.log(questions)
     
         inquirer.prompt(questions).then((answers) => {
-            console.table(answers)
+            console.table(answers);
+            menu();
+            //create manager object from class
+            //push the manager object to an array
         })
     }
 
     function menu() {
-        inquirer.prompt(options).then((selections)) => {
-            console.table(selections)
+        inquirer.prompt(options).then((selections) => {
+            console.table(selections);
+        if (selections.options == 'Add engineer') {
+            inquirer.prompt(engineer);
+
+        } else if(selections.options == 'Add intern'){
+            inquirer.prompt(intern)
+        }else {
+            //finishi= team
         }
+        })
     }
-    
+    function buildTeam(){
+        //fs.writeFile
+        //use the template helper code: map through the array, for each employee create an appriate html block for that employee. use template literal
+    }
     // Function call to initialize app
     init();
