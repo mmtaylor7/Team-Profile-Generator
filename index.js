@@ -105,7 +105,7 @@ const questions = [
             inquirer.prompt(intern);
             //need to figure out how to re-call the options varaible to ask "add engineer, add intern or finish here"
         }else {
-            //finishi= team
+            
         }
         })
     }
