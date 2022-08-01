@@ -1,6 +1,8 @@
 const inquirer = require('inquirer');
 const fs = require('fs');
 const path = require('path');
+const Manager = require('./lib/Manager');
+//don't forget to require intern and engineer files
 
 const questions = [   
     {
