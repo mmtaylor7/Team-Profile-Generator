@@ -4,7 +4,6 @@ const path = require("path");
 const Manager = require("./lib/Manager");
 const Intern = require("./lib/Intern");
 const Engineer = require("./lib/Engineer");
-const Handlebars = require("./dist/index.html");
 
 const questions = [
   {
