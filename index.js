@@ -4,7 +4,7 @@ const path = require("path");
 const Manager = require("./lib/Manager");
 const Intern = require("./lib/Intern");
 const Engineer = require("./lib/Engineer");
-const Handlebars = require("handlebars");
+const Handlebars = require("./dist/index.html");
 
 const questions = [
   {
@@ -87,11 +87,9 @@ const intern = [
 const allUsers = [];
 
 function init() {
-  console.log(questions);
-
   inquirer.prompt(questions).then(({ name, id, email, officeNumber }) => {
     const manager = new Manager(name, id, email, officeNumber);
-    allUsers.push(manager);
+    allUsers.push({ ...manager, type: "manager" });
 
     menu();
     //create manager object from class
@@ -105,22 +103,60 @@ function menu() {
     if (selections.options == "Add engineer") {
       inquirer.prompt(engineer).then(({ name, id, email, gitHub }) => {
         const engineer = new Engineer(name, id, email, gitHub);
-        allUsers.push(engineer);
+        allUsers.push({ ...engineer, type: "engineer" });
         menu();
       });
     } else if (selections.options == "Add intern") {
       inquirer.prompt(intern).then(({ name, id, email, school }) => {
         const intern = new Intern(name, id, email, school);
-        allUsers.push(intern);
+        allUsers.push({ ...intern, type: "intern" });
         menu();
       });
     } else {
+      buildTeam();
     }
   });
 }
 function buildTeam() {
-  //fs.writeFile
-  // for each employee needs to be a place in html for each one?
+  var startHtml = `<html><head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+    integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N"
+    crossorigin="anonymous"
+  />
+  <link rel="stylesheet" href="./style.css" />
+  <title>Document</title>
+</head>`;
+  var middleHtml = "";
+  var endHtml = "</html>";
+
+  allUsers.map((user) => {
+    console.log("user", user);
+    middleHtml += `<div class="manager-card col-4">
+    <div>Name: ${user.name}</div>
+    <div>Email: ${user.email}</div>
+    <div>ID: ${user.id}</div>
+    <div>Role: ${user.type}</div>`;
+    if (user.type == "manager") {
+      middleHtml += `<div>Office Number: ${user.officeNumber}</div></div>`;
+    } else if (user.type == "engineer") {
+      middleHtml += `<div>Github: ${user.gitHub}</div></div>`;
+    } else {
+      middleHtml += `<div>School: ${user.school}</div></div>`;
+    }
+  });
+
+  fs.writeFile(
+    "./dist/index.html",
+    startHtml + middleHtml + endHtml,
+    (error) => {
+      console.log(error);
+    }
+  );
 }
 // Function call to initialize app
 init();

@@ -3,3 +3,31 @@
   font-size: 80px;
   color: whitesmoke;
 }
+
+.cards-container {
+  display: flex;
+  align-items: center;
+  justify-self: center;
+}
+
+.top-container {
+  text-align: center;
+}
+
+.bottom-container {
+  text-align: center;
+}
+
+.manager-card {
+  border-style: solid;
+  border-color: rgb(185, 21, 56);
+  border-width: 3px;
+  border-radius: 0px 5px 0px 0px;
+}
+
+.employee-card {
+  border-style: solid;
+  border-color: rgb(185, 21, 56);
+  border-width: 3px;
+  border-radius: 0px 5px 0px 0px;
+}
