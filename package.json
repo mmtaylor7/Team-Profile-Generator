@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
@@ -18,6 +19,7 @@
   },
   "homepage": "https://github.com/mmtaylor7/Team-Profile-Generator#readme",
   "dependencies": {
+    "handlebars": "^4.7.7",
     "inquirer": "^6.5.0"
   }
 }

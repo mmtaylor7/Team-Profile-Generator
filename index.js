@@ -2,13 +2,15 @@ const inquirer = require('inquirer');
 const fs = require('fs');
 const path = require('path');
 const Manager = require('./lib/Manager');
-//don't forget to require intern and engineer files
+const Intern = require('./lib/Intern');
+const Engineer = require('./lib/Engineer');
+const Handlebars = require('handlebars');
 
 const questions = [   
     {
         type: 'input',
         message: 'What is team manager\'\s name?',
-        name: 'manager',
+        name: 'name',
       },
       {
         type: 'input',
@@ -23,7 +25,7 @@ const questions = [
       {
         type: 'input',
         message: 'What is the employee\'\s office number?',
-        name: 'office',
+        name: 'officeNumber',
       },
     ];
 
@@ -40,22 +42,22 @@ const questions = [
         {
             type: 'input',
             message: 'What is the engineer\'\s name?',
-            name: 'engineerName',
+            name: 'name',
           },
           {
             type: 'input',
             message: 'What is the engineer\'\s id?',
-            name: 'engineerId',
+            name: 'id',
           },
           {
             type: 'input',
             message: 'What is the engineer\'\s email?',
-            name: 'engineerEmail',
+            name: 'email',
           },
           {
             type: 'input',
             message: 'What is the engineer\'\s GitHub username?',
-            name: 'engineerGithub',
+            name: 'gitHub',
           },
     ]
 
@@ -63,32 +65,38 @@ const questions = [
         {
             type: 'input',
             message: 'What is the intern\'\s name?',
-            name: 'internName',
+            name: 'name',
           },
           {
             type: 'input',
             message: 'What is the intern\'\s id?',
-            name: 'internId',
+            name: 'id',
           },
           {
             type: 'input',
             message: 'What is the intern\'\s email?',
-            name: 'internEmail',
+            name: 'email',
           },
           {
             type: 'input',
             message: 'What is the intern\'\s school name?',
-            name: 'internSchool',
+            name: 'school',
           },
     ]
 
+    const allUsers = [
+      
+    ]
     
 
     function init() {
         console.log(questions)
     
-        inquirer.prompt(questions).then((answers) => {
-            console.table(answers);
+        inquirer.prompt(questions).then(({name,id,email,officeNumber}) => {
+            const manager = new Manager(name, id, email, officeNumber);
+            allUsers.push(manager);
+            
+            
             menu();
             //create manager object from class
             //push the manager object to an array
@@ -99,19 +107,27 @@ const questions = [
         inquirer.prompt(options).then((selections) => {
             console.table(selections);
         if (selections.options == 'Add engineer') {
-            inquirer.prompt(engineer).then((data) => {
-              //after engineer questions
+            inquirer.prompt(engineer).then(({name, id, email, gitHub}) => {
+              const engineer = new Engineer(name, id, email, gitHub);
+              allUsers.push(engineer);
             menu()  
             });
             
-            //need to figure out how to re-call the options varaible to ask "add engineer, add intern or finish here"
-
         } else if(selections.options == 'Add intern'){
-            inquirer.prompt(intern).then((data) => {
+            inquirer.prompt(intern).then(({name, id, email, school}) => {
+              const intern = new Intern (name, id, email, school);
+              allUsers.push(intern)
               menu()
             });
-            //need to figure out how to re-call the options varaible to ask "add engineer, add intern or finish here"
+            
         }else {
+            console.log(allUsers)
+              fs.promises.readFile('./src/manager.handlebars').then((file) => {
+                var template = Handlebars.compile(file.toString());
+
+                console.log(template({ name: allUsers[0].name, id: allUsers[0].id, email: allUsers[0].email, officeNumber: allUsers[0].officeNumber }));
+              })
+
             
         }
         })
